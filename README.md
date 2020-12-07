@@ -23,8 +23,8 @@ npm i @napkyns/toolbox
 yarn add @napkyns/toolbox
 ```
 
-**Vuex Store**
-> :warning:  In order to utilize the ``hasMany`` and ``belongsTo`` relationships on the [Model](./src/Model/README.md), you must set your Vue instance to a ```window``` variable.
+> **:warning: Vuex Store**  
+> In order to utilize the ``hasMany`` and ``belongsTo`` relationships on the [Model](./src/Model/README.md), you must set your Vue instance to a ```window``` variable.
 
 ```
 window.vue = new Vue(vueConfig);
