@@ -3,7 +3,7 @@
 ## Example Usage
 
 Portfolio.js
-```
+```javascript
 import { Model } from '@napkyns/toolbox';
 
 import Account from '@/your-project/Account';
@@ -27,7 +27,7 @@ export default class Portfolio extends Model {
 ```
 
 Account.js
-```
+```javascript
 import { Model } from '@napkyns/toolbox';
 
 import Portfolio from '@/your-project/Porfolio';
@@ -64,7 +64,7 @@ export default class Account extends Model {
 > Assuming you have a Vuex Store wired up for your portfolios...
 
 Portfolios.vue
-```
+```vue
 <template>
     <div id="portfolios">
         <template v-for="portfolio in portfolios">
