@@ -1,6 +1,6 @@
 {
   "name": "@napkyns/toolbox",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A collection of helpful JS classes.",
   "main": "src/index.js",
   "scripts": {
@@ -22,5 +22,6 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "pluralize": "^8.0.0"
-  }
+  },
+  "devDependencies": {}
 }

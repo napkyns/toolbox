@@ -2,7 +2,7 @@ import _ from 'lodash';
 import pluralize from 'pluralize';
 import moment from 'moment';
 
-import Field from './Field';
+import Field from '../Field';
 
 let store;
 

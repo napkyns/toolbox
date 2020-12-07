@@ -1,4 +1,4 @@
-import ApiService from './ApiService';
+import Index from './ApiService';
 import Field from './Field';
 import Form from './Form';
 import FormErrors from './FormErrors';
@@ -8,7 +8,7 @@ import ResourceService from './ResourceService';
 import ResourceStore from './ResourceStore';
 
 export {
-  ApiService,
+  Index,
   Field,
   Form,
   FormErrors,

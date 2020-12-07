@@ -1,4 +1,4 @@
-import FormErrors from './FormErrors';
+import FormErrors from '../FormErrors';
 
 export default class Form {
 

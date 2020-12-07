@@ -1,6 +1,6 @@
 import normalize from 'json-api-normalizer';
 
-import Paginator from './Paginator';
+import Paginator from '../Paginator';
 
 export function processData(primaryKey, commit, data, replace = false) {
 
