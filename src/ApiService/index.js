@@ -23,8 +23,8 @@ export default class ApiService {
     this.api.interceptors.response.use(null, error => {
       if(error.response && error.response.status === 401) {
         localStorage.removeItem('token');
-        if (window.loginPath) {
-          window.location.replace(window.loginPath);
+        if (window.app && window.app.loginPath) {
+          window.location.replace(window.app.loginPath);
         } else {
           return Promise.reject(error);
         }
