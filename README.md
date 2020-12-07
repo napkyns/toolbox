@@ -1,6 +1,7 @@
-A collection of helpful JS classes.
+A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 
 ## Installation
+
 NPM  
 ```
 npm i @napkyns/toolbox
@@ -9,6 +10,13 @@ npm i @napkyns/toolbox
 Yarn  
 ```
 yarn add @napkyns/toolbox
+```
+
+Vuex Store
+> :warning: In order to utilize the ``hasMany`` and ``belongsTo`` relationships on the [Model](./src/Model/README.md), you must set your Vue instance to a ```window``` variable.
+
+```
+window.vue = new Vue(vueConfig);
 ```
 
 ## Classes
@@ -21,3 +29,60 @@ yarn add @napkyns/toolbox
 - [Paginator](./src/Paginator/README.md)
 - [ResourceService](./src/ResourceService/README.md)
 - [ResourceStore](./src/ResourceStore/README.md)
+
+## Example Usage
+
+Portfolio.js
+```
+import { Model } from '@napkyns/toolbox';
+
+import Account from '@/your-project/Account';
+
+export default class Portfolio extends Model {
+
+  static get fields() {
+    return {
+      name: {
+        default: '',
+        required: true,
+        type: String,
+      },
+    };
+  }
+
+  get accounts() {
+    return this.hasMany(Account);
+  }
+}
+```
+
+Account.js
+```
+import { Model } from '@napkyns/toolbox';
+
+import Portfolio from '@/your-project/Porfolio';
+
+export default class Account extends Model {
+
+  static get dates() {
+    return [
+      'lastUpdateAt',
+    ];
+  }
+
+  static get fields() {
+    return {
+      name: {
+        default: '',
+        required: true,
+        type: String,
+      },
+    };
+  }
+
+  get portfolio() {
+    return this.belongsTo(Portfolio);
+  }
+}
+```
+
