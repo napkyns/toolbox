@@ -20,13 +20,16 @@ export default class FormErrors {
     if (this.bag[field]) {
       return this.bag[field];
     }
+
+    return null;
   }
 
   has(field) {
-    return this.bag.hasOwnProperty(field);
+    return this.bag.hasOwnProperty(_.camelCase(field));
   }
 
   clear(field) {
+
     if (field) {
       delete this.bag[field];
       return;

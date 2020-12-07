@@ -92,3 +92,31 @@ export default class Account extends Model {
 }
 ```
 
+> Assuming you have a Vuex Store wired up for your portfolios...
+
+Portfolios.vue
+```
+<template>
+    <div id="portfolios">
+        <template v-for="portfolio in portfolios">
+            <div class="portfolio">
+                <template v-for="account in portfolio">
+                    <span class="name">{{ account.name }}</span>
+                    <div class="balance">{{ account.balance }}</div>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'Portfolios',
+  computed: {
+    portfolios() {
+      return this.$store.getters['portfolio/all'];
+    },
+  },
+}
+</script>
+```
