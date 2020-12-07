@@ -27,6 +27,6 @@ yarn add @napkyns/toolbox
 
 In order to utilize the ``hasMany`` and ``belongsTo`` relationships on the [Model](./src/Model/README.md), you must set your Vue instance to a ```window``` variable.
 
-```
+```javascript
 window.vue = new Vue(vueConfig);
 ```
