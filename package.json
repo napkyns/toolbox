@@ -1,0 +1,26 @@
+{
+  "name": "@napkyns/toolbox",
+  "version": "1.0.0",
+  "description": "A collection of helpful JS classes.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/napkyns/toolbox.git"
+  },
+  "author": "Nick Hough",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/napkyns/toolbox/issues"
+  },
+  "homepage": "https://github.com/napkyns/toolbox#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "json-api-normalizer": "^1.0.1",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "pluralize": "^8.0.0"
+  }
+}
