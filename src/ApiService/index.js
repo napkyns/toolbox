@@ -23,8 +23,8 @@ export default class ApiService {
     this.api.interceptors.response.use(null, error => {
       if(error.response && error.response.status === 401) {
         localStorage.removeItem('token');
-        if (window.vue && window.vue.$loginUrl) {
-          window.location.replace(window.vue.$loginUrl);
+        if (window.loginPath) {
+          window.location.replace(window.loginPath);
         } else {
           return Promise.reject(error);
         }
