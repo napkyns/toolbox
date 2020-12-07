@@ -23,7 +23,11 @@ export default class ApiService {
     this.api.interceptors.response.use(null, error => {
       if(error.response && error.response.status === 401) {
         localStorage.removeItem('token');
-        window.location.replace('/auth/login');
+        if (window.vue && window.vue.$loginUrl) {
+          window.location.replace(window.vue.$loginUrl);
+        } else {
+          return Promise.reject(error);
+        }
       } else {
         return Promise.reject(error);
       }
