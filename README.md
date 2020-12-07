@@ -1,24 +1,5 @@
 A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 
-## Installation
-
-NPM  
-```
-npm i @napkyns/toolbox
-```
-
-Yarn  
-```
-yarn add @napkyns/toolbox
-```
-
-Vuex Store
-> :warning: In order to utilize the ``hasMany`` and ``belongsTo`` relationships on the [Model](./src/Model/README.md), you must set your Vue instance to a ```window``` variable.
-
-```
-window.vue = new Vue(vueConfig);
-```
-
 ## Classes
 
 - [ApiService](./src/ApiService/README.md)
@@ -29,6 +10,25 @@ window.vue = new Vue(vueConfig);
 - [Paginator](./src/Paginator/README.md)
 - [ResourceService](./src/ResourceService/README.md)
 - [ResourceStore](./src/ResourceStore/README.md)
+
+## Installation
+
+**NPM**  
+```
+npm i @napkyns/toolbox
+```
+
+**Yarn**  
+```
+yarn add @napkyns/toolbox
+```
+
+**Vuex Store**
+> :warning:  In order to utilize the ``hasMany`` and ``belongsTo`` relationships on the [Model](./src/Model/README.md), you must set your Vue instance to a ```window``` variable.
+
+```
+window.vue = new Vue(vueConfig);
+```
 
 ## Example Usage
 
@@ -76,6 +76,11 @@ export default class Account extends Model {
         default: '',
         required: true,
         type: String,
+      },
+      balance: {
+        default: 0,
+        required: false,
+        type: Number,
       },
     };
   }
