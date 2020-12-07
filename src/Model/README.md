@@ -4,7 +4,7 @@ The model is the base object we use to consume API payloads that represent serve
 
 ## Demo
 
-[Codepen](https://codepen.io/nickhough/pen/abmZwJo)
+<a href="https://codepen.io/nickhough/pen/abmZwJo" target="_blank">Codepen</a>
 
 ## Example Usage
 
