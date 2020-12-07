@@ -1,3 +1,5 @@
+![npm](https://img.shields.io/npm/dt/@napkyns/toolbox?style=flat-square)
+
 A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 
 ## Classes

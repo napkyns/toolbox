@@ -1,5 +1,11 @@
 # Model
 
+The model is the base object we use to consume API payloads that represent server-side models. 
+
+## Demo
+
+[Codepen](https://codepen.io/nickhough/pen/abmZwJo)
+
 ## Example Usage
 
 Portfolio.js
@@ -61,7 +67,10 @@ export default class Account extends Model {
 }
 ```
 
-> Assuming you have a Vuex Store wired up for your portfolios...
+PortfolioStore.js
+```javascript
+
+```
 
 Portfolios.vue
 ```vue
@@ -69,7 +78,7 @@ Portfolios.vue
     <div id="portfolios">
         <template v-for="portfolio in portfolios">
             <div class="portfolio">
-                <template v-for="account in portfolio">
+                <template v-for="account in portfolio.accounts">
                     <span class="name">{{ account.name }}</span>
                     <div class="balance">{{ account.balance }}</div>
                 </template>
