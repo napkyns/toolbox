@@ -2,48 +2,6 @@ import normalize from 'json-api-normalizer';
 
 import Paginator from '../Paginator';
 
-export function processData(primaryKey, commit, data, replace = false) {
-
-  const normalized = normalize(data);
-
-  for (let [key, models] of Object.entries(normalized)) {
-
-    for (let [id, model] of Object.entries(models)) {
-
-      if (model.attributes) {
-        for (const [key, value] of Object.entries(model.attributes)) {
-          model[key] = value;
-        }
-        delete model.attributes;
-      }
-
-      if (model.relationships) {
-        for (const [_key, value] of Object.entries(model.relationships)) {
-          if (Array.isArray(value.data)) {
-            model.relationships[_key] = value.data.map(payload => payload.id);
-          } else {
-            model.relationships[_key] = value.data.id;
-          }
-        }
-      }
-
-      models[id] = model;
-    }
-
-    if (replace) {
-      commit(`${key}/index`, models, { root: true });
-    } else {
-      commit(`${key}/merge`, models, { root: true });
-    }
-  }
-
-  if (normalized[primaryKey]) {
-    return Object.keys(normalized[primaryKey]);
-  }
-
-  return [];
-}
-
 export default class ResourceStore {
 
   constructor(config = {}) {
@@ -65,7 +23,7 @@ export default class ResourceStore {
       index: ({commit}, payload) => {
         return this.service.index(payload).then((response) => {
 
-          const ids = processData(this.key, commit, response.data, payload && payload.replaceStore === true);
+          const ids = ResourceStore.processData(this.key, commit, response.data, payload && payload.replaceStore === true);
 
           let paginator = null;
 
@@ -81,13 +39,13 @@ export default class ResourceStore {
       },
       show: ({commit}, payload) => {
         return this.service.show(payload.id, payload).then((response) => {
-          return processData(this.key, commit, response.data);
+          return ResourceStore.processData(this.key, commit, response.data);
         });
       },
       store: ({commit}, payload) => {
         return this.service.store(payload).then((response) => {
           if (response) {
-            const idInArray = processData(this.key, commit, response.data);
+            const idInArray = ResourceStore.processData(this.key, commit, response.data);
             return idInArray[0];
           }
         });
@@ -95,18 +53,18 @@ export default class ResourceStore {
       update: ({commit}, payload) => {
         return this.service.update(payload.id, payload).then((response) => {
           if (response) {
-            return processData(this.key, commit, response.data);
+            return ResourceStore.processData(this.key, commit, response.data);
           }
         });
       },
       archive: ({commit}, payload) => {
         return this.service.archive(payload.id, payload).then((response) => {
-          return processData(this.key, commit, response.data);
+          return ResourceStore.processData(this.key, commit, response.data);
         });
       },
       restore: ({commit}, payload) => {
         return this.service.restore(payload.id, payload).then((response) => {
-          return processData(this.key, commit, response.data);
+          return ResourceStore.processData(this.key, commit, response.data);
         });
       },
       destroy: ({commit}, payload) => {
@@ -161,6 +119,48 @@ export default class ResourceStore {
       },
       ...config.getters,
     };
+  }
+
+  static processData(primaryKey, commit, data, replace = false) {
+
+    const normalized = normalize(data);
+
+    for (let [key, models] of Object.entries(normalized)) {
+
+      for (let [id, model] of Object.entries(models)) {
+
+        if (model.attributes) {
+          for (const [key, value] of Object.entries(model.attributes)) {
+            model[key] = value;
+          }
+          delete model.attributes;
+        }
+
+        if (model.relationships) {
+          for (const [_key, value] of Object.entries(model.relationships)) {
+            if (Array.isArray(value.data)) {
+              model.relationships[_key] = value.data.map(payload => payload.id);
+            } else {
+              model.relationships[_key] = value.data.id;
+            }
+          }
+        }
+
+        models[id] = model;
+      }
+
+      if (replace) {
+        commit(`${key}/index`, models, { root: true });
+      } else {
+        commit(`${key}/merge`, models, { root: true });
+      }
+    }
+
+    if (normalized[primaryKey]) {
+      return Object.keys(normalized[primaryKey]);
+    }
+
+    return [];
   }
 
   toObject() {
