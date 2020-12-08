@@ -6,7 +6,7 @@ export default class ApiService {
 
   constructor(config = {}) {
 
-    this.baseURL = config.baseURL || process.env.VUE_APP_API_BASE_URL || '';
+    this.baseURL = config.apiBaseUrl || process.env.VUE_APP_API_BASE_URL || '';
     this.maxDepth = config.maxDepth || process.env.VUE_APP_API_MAX_DEPTH || 3;
     this.tokenKey = config.tokenKey || process.env.VUE_APP_TOKEN_KEY || 'token';
     this.loginUrl = config.loginUrl || process.env.VUE_APP_LOGIN_URL|| null;

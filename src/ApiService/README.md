@@ -15,6 +15,6 @@ You may set config variables by passing them into the constructor of the ApiServ
 | Config Key | Env Key | Required | Description | Default |
 | --- | --- | :---: | --- | --- |
 | apiBaseUrl | VUE_APP_API_BASE_URL | Yes | Passed to Axios for the `BaseURL` param. | - |
-| tokenKey | VUE_APP_API_MAX_DEPTH | No | Optionally, override where `localStorage` key. | `token` |
-| loginPath | VUE_APP_TOKEN_KEY | No | Will redirect to this url when a 401 response is received. | - |
-| maxDepth | VUE_APP_LOGIN_URL | No | Configure how deep with the `preparePayload` go. | `3` |
+| tokenKey | VUE_APP_TOKEN_KEY | No | Optionally, override where `localStorage` key. | `token` |
+| loginUrl | VUE_APP_LOGIN_URL | No | Will redirect to this url when a 401 response is received. | - |
+| maxDepth | VUE_APP_API_MAX_DEPTH | No | Configure how deep with the `preparePayload` go. | `3` |
