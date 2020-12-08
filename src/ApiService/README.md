@@ -18,7 +18,7 @@ Authorization: {
 You can override this by setting the ``window.app.tokenKey`` variable.
 
 ```javascript
-window.app.tokenKey = 'yourCustomKey';
+window.app.tokenKey = 'customKey';
 ```
 
 **Login Redirect**

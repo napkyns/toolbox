@@ -25,10 +25,24 @@ npm i @napkyns/toolbox
 yarn add @napkyns/toolbox
 ```
 
-**Vuex Store**
+## window.app
 
-In order to utilize the ``hasMany`` and ``belongsTo`` relationships on the [Model](./src/Model/README.md), you must set your Vue instance to a ```window``` variable.
+Some classes have additional functionality when given access to specific variables.
 
 ```javascript
-window.vue = new Vue(vueConfig);
+window.app = {};
+```
+
+Adding a `loginUrl` to the `window.app` object will cause the [ApiService](./src/ApiService/README.md) to automatically redirect users to the login when a 401 response is received. 
+
+```javascript
+window.app.loginUrl = '/auth/login';
+```
+
+Adding a `tokeyKey` to the `window.app` object will override the `localStorage` key the [ApiService](./src/ApiService/README.md) uses for `Authorization` headers. 
+
+Adding a Vue instance to the ``window.app`` object will add relationship functionality to the [Model](./src/Model/README.md). 
+
+```javascript
+window.app.vue = new Vue(vueConfig);
 ```
