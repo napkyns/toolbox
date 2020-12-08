@@ -2,14 +2,16 @@ import _ from 'lodash';
 import axios from 'axios';
 import moment from 'moment';
 
-const maxDepth = 3;
+const maxDepth = window.app && window.app.apiServiceMaxDepth ? window.app.apiServiceMaxDepth : 3;
 
 export default class ApiService {
 
   constructor() {
 
+    const baseURL = window.app && window.app.apiBaseUrl ? window.app.apiBaseUrl : '';
+
     this.api = axios.create({
-      baseURL: process.env.VUE_APP_API_URL,
+      baseURL,
       headers: {
         Authorization: {
           toString() {
