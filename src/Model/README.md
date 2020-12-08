@@ -67,11 +67,6 @@ export default class Account extends Model {
 }
 ```
 
-PortfolioStore.js
-```javascript
-
-```
-
 Portfolios.vue
 ```vue
 <template>
