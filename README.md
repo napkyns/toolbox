@@ -25,31 +25,9 @@ npm i @napkyns/toolbox
 yarn add @napkyns/toolbox
 ```
 
-## Window Variables
+## Window Variable
 
-All variables should be set under the `window.app` key.
-
-**Required Variables**
-
-Some classes have required variables in order to function properly.
-
-```javascript
-window.app.apiBaseUrl = 'https://api.domain.com';
-```
-
-**Optional Variables**
-
-Some classes have additional functionality when given access to certain variables.
-
-Adding a `loginUrl` to the `window.app` object will cause the [ApiService](./src/ApiService/README.md) to automatically redirect users to the login when a 401 response is received. 
-
-```javascript
-window.app.loginUrl = '/auth/login';
-```
-
-Adding a `tokeyKey` to the `window.app` object will override the `localStorage` key the [ApiService](./src/ApiService/README.md) uses for `Authorization` headers. 
-
-Adding a Vue instance to the `window.app` object will add relationship functionality to the [Model](./src/Model/README.md). 
+Adding your Vue instance to the `window.app` object will add `hasMany` and `belongsTo` relationship functionality to the [Model](./src/Model/README.md). 
 
 ```javascript
 window.app.vue = new Vue(vueConfig);

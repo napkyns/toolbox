@@ -9,7 +9,8 @@ The ApiService has a few main features.
 
 ## Config
 
-You may set config variables by passing them into the constructor of the ApiService or by setting them in your .env(.environment) files. The constructor config object will take precedent. 
+You may set config variables by passing them into the constructor of the ApiService or by setting them in your 
+.env(.environment) files. The constructor config object will take precedent. 
 
 | Config Key | Env Key | Required | Description | Default |
 | --- | --- | :---: | --- | --- |
