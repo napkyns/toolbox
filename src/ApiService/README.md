@@ -21,7 +21,7 @@ Vue .env file(s). The constructor config object will take precedent.
 
 ## Methods
 
-**prepareParams**
+###prepareParams
 
 The `prepareParams` method will accept a payload of type array for the `include` key and transform it to a comma delimited string.
 
@@ -40,6 +40,6 @@ return this.api({
 });
 ```
 
-**preparePayload**
+###preparePayload
 
 The `preparePayload` method will accept a camelCase keyed payload and transform the keys to snake_case.
