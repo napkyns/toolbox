@@ -6,6 +6,7 @@ The ApiService has the following features:
 2. Catches 401 responses and optionally redirects to a provided `loginUrl`.
 3. Accepts an array of `include` or `require` parameters and joins the array before the request.
 4. Accepts a payload with camelCased keys and converts the keys to snake_case before the request.
+5. Parses certain payload values, such as `moment` objects and `files`.
 
 ## Config
 
@@ -16,7 +17,7 @@ Vue .env file(s). The constructor config object will take precedent.
 | --- | --- | :---: | --- | --- |
 | apiBaseUrl | VUE_APP_API_BASE_URL | Yes | Passed to Axios for the `BaseURL` param. | - |
 | tokenKey | VUE_APP_TOKEN_KEY | No | Optionally, override where `localStorage` key. | `token` |
-| loginUrl | VUE_APP_LOGIN_URL | No | Will redirect to this url when a 401 response is received. | - |
+| loginUrl | VUE_APP_LOGIN_URL | No | Will redirect to this url when a 401 response is received. | `/auth/login` |
 | maxDepth | VUE_APP_API_MAX_DEPTH | No | Configure how deep with the `preparePayload` go. | `3` |
 
 ## Methods

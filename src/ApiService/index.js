@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import axios from 'axios';
-import moment from 'moment';
 
 export default class ApiService {
 
@@ -9,7 +8,7 @@ export default class ApiService {
     this.baseUrl = config.apiBaseUrl || process.env.VUE_APP_API_BASE_URL || '';
     this.maxDepth = config.maxDepth || process.env.VUE_APP_API_MAX_DEPTH || 3;
     this.tokenKey = config.tokenKey || process.env.VUE_APP_TOKEN_KEY || 'token';
-    this.loginUrl = config.loginUrl || process.env.VUE_APP_LOGIN_URL|| null;
+    this.loginUrl = config.loginUrl || process.env.VUE_APP_LOGIN_URL || '/auth/login';
 
     this.api = axios.create({
       baseURL: this.baseUrl || '',
@@ -62,19 +61,14 @@ export default class ApiService {
 
     if (Array.isArray(data)) {
       return data.map(item => this.preparePayload(item, currentDepth + 1));
-    } else if (moment.isMoment(data)) {
-      return data.clone().utc().format('YYYY-MM-DD HH:mm:ss');
     } else if (typeof data === 'string' || data === null) {
       return data;
     } else if (typeof data === 'object') {
+
       let snaked = {};
 
       for (let key in data) {
-        if (key === 'file') {
-          let formData = new FormData();
-          formData.append('file', data['file']);
-          snaked['file'] = formData;
-        } else if (data.hasOwnProperty(key)) {
+        if (data.hasOwnProperty(key)) {
           snaked[_.snakeCase(key)] = this.preparePayload(data[key], currentDepth + 1);
         }
       }
