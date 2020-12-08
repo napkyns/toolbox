@@ -18,3 +18,28 @@ Vue .env file(s). The constructor config object will take precedent.
 | tokenKey | VUE_APP_TOKEN_KEY | No | Optionally, override where `localStorage` key. | `token` |
 | loginUrl | VUE_APP_LOGIN_URL | No | Will redirect to this url when a 401 response is received. | - |
 | maxDepth | VUE_APP_API_MAX_DEPTH | No | Configure how deep with the `preparePayload` go. | `3` |
+
+## Methods
+
+**prepareParams**
+
+The `prepareParams` method will accept a payload of type array for the `include` key and transform it to a comma delimited string.
+
+```javascript
+const params = {
+  include: [
+    'account',
+    'user',
+  ],
+};
+
+return this.api({
+  method: 'get',
+  url: `${this.baseUrl}/${id}`,
+  params: this.prepareParams(params),
+});
+```
+
+**preparePayload**
+
+The `preparePayload` method will accept a camelCase keyed payload and transform the keys to snake_case.

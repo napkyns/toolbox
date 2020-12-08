@@ -1,6 +1,6 @@
-import Index from '../ApiService';
+import ApiService from '../ApiService';
 
-export default class ResourceService extends Index{
+export default class ResourceService extends ApiService {
   
   index(payload = {}) {
 
