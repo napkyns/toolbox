@@ -91,6 +91,10 @@ export default class Model {
     }
   }
 
+  static get service() {
+    return null;
+  }
+
   parseValueRecursive(key, value) {
 
     const camelCaseKey = _.camelCase(key);

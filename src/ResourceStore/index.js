@@ -8,9 +8,9 @@ export default class ResourceStore {
 
     this.key = config.model.vuexModuleKey || config.key || null;
 
-    this.model = config.model;
+    this.model = config.model || {};
 
-    this.service = config.service;
+    this.service = this.model.service ? new this.model.service() : (config.service ? new config.service() : null);
 
     this.namespaced = config.namespace || true;
 

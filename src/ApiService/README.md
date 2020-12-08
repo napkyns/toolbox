@@ -32,8 +32,7 @@ export default class PostService extends ApiService {
   
   constructor() {
     super();
-    this.resourceType = 'post';
-    this.baseUrl = `${this.resourceType}`;
+    this.baseUrl = 'post';
   }
 
   index(payload = {}) {
@@ -72,8 +71,7 @@ export default class PostService extends ApiService {
   
   constructor() {
     super();
-    this.resourceType = 'post';
-    this.baseUrl = `${this.resourceType}`;
+    this.baseUrl = 'post';
   }
 
   store(payload = {}) {
