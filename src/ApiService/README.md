@@ -23,23 +23,84 @@ Vue .env file(s). The constructor config object will take precedent.
 
 ### prepareParams
 
-The `prepareParams` method will accept a payload of type array for the `include` key and transform it to a comma delimited string.
+The `prepareParams` method will accept a payload of type array for the `include` or `require` keys and transform it to a comma delimited string.
 
 ```javascript
-const params = {
-  include: [
-    'account',
-    'user',
-  ],
-};
+import ApiService from '../ApiService';
 
-return this.api({
-  method: 'get',
-  url: `${this.baseUrl}/${id}`,
-  params: this.prepareParams(params),
-});
+export default class PostService extends ApiService {
+  
+  constructor() {
+    super();
+    this.resourceType = 'post';
+    this.baseUrl = `${this.resourceType}`;
+  }
+
+  index(payload = {}) {
+
+    const { params } = payload;
+
+    // params == {
+    //   include: ['account', 'user'],
+    //   require: ['balanceByDay', 'balanceByMonth'],
+    // }
+
+    const apiConfig = {
+      method: 'get',
+      url: this.baseUrl,
+      params: this.prepareParams(params),
+    }; 
+
+    // params == {
+    //   include: 'account,user',
+    //   require: 'balanceByDay,balanceByMonth',
+    // }
+
+    return this.api(apiConfig);
+  }
+}
 ```
 
 ### preparePayload
 
 The `preparePayload` method will accept a camelCase keyed payload and transform the keys to snake_case.
+
+```javascript
+import ApiService from '../ApiService';
+
+export default class PostService extends ApiService {
+  
+  constructor() {
+    super();
+    this.resourceType = 'post';
+    this.baseUrl = `${this.resourceType}`;
+  }
+
+  store(payload = {}) {
+  
+      const { params, ...rest } = payload;
+    
+      // rest == {
+      //   postBody: 'Foo bar',
+      //   postDate: '2020-12-08 09:00:00',
+      // }
+
+      const apiConfig = {
+        method: 'post',
+        url: this.baseUrl,
+        params: this.prepareParams(params),
+        data: this.preparePayload(rest),
+      };  
+
+      // apiConfig == {
+      //   ...
+      //   data: {
+      //     post_body: 'Foo bar',
+      //     post_date: '2020-12-08 09:00:00',
+      //   },
+      // }
+
+      return this.api(apiConfig);
+    }
+}
+```
