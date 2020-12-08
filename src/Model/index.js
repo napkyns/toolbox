@@ -32,8 +32,8 @@ export default class Model {
       },
     };
 
-    if (window.vue) {
-      store = window.vue.$store;
+    if (window.app && window.app.vue) {
+      store = window.app.vue.$store;
     }
 
     for (const [key, value] of Object.entries(this._config.fields)) {
@@ -201,7 +201,7 @@ export default class Model {
   hasMany(model) {
 
     if (!store) {
-      return  [];
+      return [];
     }
 
     const className = _.camelCase(model.name);
