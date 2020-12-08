@@ -1,6 +1,6 @@
 # ApiService
 
-The ApiService has a few main features.
+The ApiService has the following features:
 
 1. Adds the `Authorization` headers to outbound requests.
 2. Catches 401 responses and optionally redirects to a provided `loginUrl`.
@@ -10,7 +10,7 @@ The ApiService has a few main features.
 ## Config
 
 You may set config variables by passing them into the constructor of the ApiService or by setting them in your 
-.env(.environment) files. The constructor config object will take precedent. 
+Vue .env file(s). The constructor config object will take precedent. 
 
 | Config Key | Env Key | Required | Description | Default |
 | --- | --- | :---: | --- | --- |
