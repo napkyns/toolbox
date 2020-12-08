@@ -2,21 +2,21 @@ import _ from 'lodash';
 import axios from 'axios';
 import moment from 'moment';
 
-const maxDepth = window.app && window.app.apiServiceMaxDepth ? window.app.apiServiceMaxDepth : 3;
-
 export default class ApiService {
 
-  constructor() {
+  constructor(config = {}) {
 
-    const baseURL = window.app && window.app.apiBaseUrl ? window.app.apiBaseUrl : '';
+    this.baseURL = config.baseURL || process.env.VUE_APP_API_BASE_URL || '';
+    this.maxDepth = config.maxDepth || process.env.VUE_APP_API_MAX_DEPTH || 3;
+    this.tokenKey = config.tokenKey || process.env.VUE_APP_TOKEN_KEY || 'token';
+    this.loginUrl = config.loginUrl || process.env.VUE_APP_LOGIN_URL|| null;
 
     this.api = axios.create({
-      baseURL,
+      baseURL: this.baseURL || '',
       headers: {
         Authorization: {
           toString() {
-            const tokenKey = window.app && window.app.tokenKey ? window.app.tokenKey : 'token';
-            return  `Bearer ${localStorage.getItem(tokenKey)}`;
+            return  `Bearer ${localStorage.getItem(this.tokenKey)}`;
           },
         },
       },
@@ -27,11 +27,10 @@ export default class ApiService {
 
       if(error.response && error.response.status === 401) {
 
-        const tokenKey = window.app && window.app.tokenKey ? window.app.tokenKey : 'token';
-        localStorage.removeItem(tokenKey);
+        localStorage.removeItem(this.tokenKey);
 
-        if (window.app && window.app.loginPath) {
-          window.location.replace(window.app.loginPath);
+        if (this.loginUrl) {
+          window.location.replace(this.loginUrl);
         } else {
           return Promise.reject(error);
         }
@@ -57,7 +56,7 @@ export default class ApiService {
 
   preparePayload(data, currentDepth = 0) {
 
-    if (currentDepth >= maxDepth) {
+    if (currentDepth >= this.maxDepth) {
       return data;
     }
 
