@@ -18,7 +18,7 @@ export default class RouterBuilder {
 
     if (Array.isArray(middleware)) {
       routeMiddleware = middleware;
-    } else {
+    } else if (middleware) {
       routeMiddleware.push(middleware);
     }
 
