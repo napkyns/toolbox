@@ -4,19 +4,19 @@ A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 
 ## Classes
 
-- [ApiService](./src/ApiService/README.md)
-- [Column](./src/Column/README.md)
-- [Field](./src/Field/README.md)
-- [Form](./src/Form/README.md)
-- [FormErrors](./src/FormErrors/README.md)
-- [Menu](./src/Menu/README.md)
-- [MenuItem](./src/MenuItem/README.md)
-- [Model](./src/Model/README.md)
-- [Paginator](./src/Paginator/README.md)
-- [ResourceService](./src/ResourceService/README.md)
-- [ResourceStore](./src/ResourceStore/README.md)
-- [RouterBuilder](./src/RouterBuilder/README.md)
-- [StoreBuilder](./src/StoreBuilder/README.md)
+- [ApiService](./src/ApiService)
+- [Column](./src/Column)
+- [Field](./src/Field)
+- [Form](./src/Form)
+- [FormErrors](./src/FormErrors)
+- [Menu](./src/Menu)
+- [MenuItem](./src/MenuItem)
+- [Model](./src/Model)
+- [Paginator](./src/Paginator)
+- [ResourceService](./src/ResourceService)
+- [ResourceStore](./src/ResourceStore)
+- [RouterBuilder](./src/RouterBuilder)
+- [StoreBuilder](./src/StoreBuilder)
 
 ## Installation
 
