@@ -97,6 +97,6 @@ export default {
 Behind the scenes, the Model will reach out to the Vuex Store and pull in the related models. The Model will rely on 
 one of two things to determine relationships:
 
-1. The `relationships` property, as defined by `json-api-normalizer`
+1. The `relationships` property, as defined by `json-api-normalizer` - which is utilized by the [ResourceStore](../ResourceStore).
 2. A foreign key on the related object. In the example above, you would ensure the `account` had a `portfolioId` 
 property set with the proper id. 
