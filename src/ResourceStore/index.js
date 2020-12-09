@@ -12,7 +12,7 @@ export default class ResourceStore {
 
     this.service = this.model.service ? new this.model.service() : (config.service ? new config.service() : null);
 
-    this.namespaced = config.namespace || true;
+    this.namespaced = true;
 
     this.state = {
       items: {},

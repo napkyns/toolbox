@@ -10,6 +10,7 @@ import Model from './Model';
 import Paginator from './Paginator';
 import ResourceService from './ResourceService';
 import ResourceStore from './ResourceStore';
+import StoreBuilder from './StoreBuilder';
 
 export {
   ApiService,
@@ -20,4 +21,5 @@ export {
   Paginator,
   ResourceService,
   ResourceStore,
+  StoreBuilder,
 };

@@ -15,6 +15,7 @@ A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 - [Paginator](./src/Paginator/README.md)
 - [ResourceService](./src/ResourceService/README.md)
 - [ResourceStore](./src/ResourceStore/README.md)
+- [StoreBuilder](./src/StoreBuilder/README.md)
 
 ## Installation
 
