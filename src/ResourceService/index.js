@@ -1,12 +1,12 @@
 import ApiService from '../ApiService';
 
 export default class ResourceService extends ApiService {
-  
+
   index(payload = {}) {
 
     const { params } = payload;
 
-    return this.api({
+    return this.request({
       method: 'get',
       url: this.baseUrl,
       params: this.prepareParams(params),
@@ -17,7 +17,7 @@ export default class ResourceService extends ApiService {
 
     const { params } = payload;
 
-    return this.api({
+    return this.request({
       method: 'get',
       url: `${this.baseUrl}/${id}`,
       params: this.prepareParams(params),
@@ -28,7 +28,7 @@ export default class ResourceService extends ApiService {
 
     const { params, ...rest } = payload;
 
-    return this.api({
+    return this.request({
       method: 'post',
       url: this.baseUrl,
       params: this.prepareParams(params),
@@ -40,7 +40,7 @@ export default class ResourceService extends ApiService {
 
     const { params, ...rest } = payload;
 
-    return this.api({
+    return this.request({
       method: 'put',
       url: `${this.baseUrl}/${id}`,
       params: this.prepareParams(params),
@@ -52,7 +52,7 @@ export default class ResourceService extends ApiService {
 
     const { params, ...rest } = payload;
 
-    return this.api({
+    return this.request({
       method: 'patch',
       url: `${this.baseUrl}/${id}/archive`,
       params: this.prepareParams(params),
@@ -63,7 +63,7 @@ export default class ResourceService extends ApiService {
   destroy(id, payload = {}) {
     const { params, ...rest } = payload;
 
-    return this.api({
+    return this.request({
       method: 'delete',
       url: `${this.baseUrl}/${id}`,
       params: this.prepareParams(params),
@@ -75,7 +75,7 @@ export default class ResourceService extends ApiService {
 
     const { params, ...rest } = payload;
 
-    return this.api({
+    return this.request({
       method: 'patch',
       url: `${this.baseUrl}/${id}/restore`,
       params: this.prepareParams(params),

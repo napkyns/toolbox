@@ -1,3 +1,7 @@
+if (!window.app) {
+  window.app = {};
+}
+
 import ApiService from './ApiService';
 import Field from './Field';
 import Form from './Form';

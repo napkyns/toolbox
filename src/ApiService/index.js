@@ -10,23 +10,18 @@ export default class ApiService {
     this.tokenKey = config.tokenKey || process.env.VUE_APP_TOKEN_KEY || 'token';
     this.loginUrl = config.loginUrl || process.env.VUE_APP_LOGIN_URL || '/auth/login';
 
-    this.api = axios.create({
+    this.axios = axios.create({
       baseURL: this.baseUrl || '',
-      headers: {
-        Authorization: {
-          toString() {
-            return  `Bearer ${localStorage.getItem(this.tokenKey)}`;
-          },
-        },
-      },
       responseType: 'json',
     });
 
-    this.api.interceptors.response.use(null, error => {
+    this.axios.interceptors.response.use(null, error => {
 
-      if(error.response && error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
 
-        localStorage.removeItem(this.tokenKey);
+        if (localStorage.getItem(this.tokenKey)) {
+          localStorage.removeItem(this.tokenKey);
+        }
 
         if (this.loginUrl) {
           window.location.replace(this.loginUrl);
@@ -37,6 +32,21 @@ export default class ApiService {
       } else {
         return Promise.reject(error);
       }
+    });
+  }
+
+  request(config = {}) {
+
+    const {headers, ...rest} = config;
+    const token = localStorage.getItem(this.tokenKey);
+    const requestHeaders = {
+      Authorization: token ? `Bearer ${token}` : null,
+      ...headers,
+    };
+
+    return this.axios({
+      headers: requestHeaders,
+      ...rest,
     });
   }
 

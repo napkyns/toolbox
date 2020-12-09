@@ -5,9 +5,12 @@ A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 ## Classes
 
 - [ApiService](./src/ApiService/README.md)
+- [Column](./src/Column/README.md)
 - [Field](./src/Field/README.md)
 - [Form](./src/Form/README.md)
 - [FormErrors](./src/FormErrors/README.md)
+- [Menu](./src/Menu/README.md)
+- [MenuItem](./src/MenuItem/README.md)
 - [Model](./src/Model/README.md)
 - [Paginator](./src/Paginator/README.md)
 - [ResourceService](./src/ResourceService/README.md)
