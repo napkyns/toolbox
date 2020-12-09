@@ -33,7 +33,7 @@ export default class PostService extends ApiService {
   
   constructor() {
     super();
-    this.baseUrl = 'post';
+    this.url = 'post';
   }
 
   index(payload = {}) {
@@ -45,9 +45,9 @@ export default class PostService extends ApiService {
     //   require: ['balanceByDay', 'balanceByMonth'],
     // }
 
-    const apiConfig = {
+    const requestConfig = {
       method: 'get',
-      url: this.baseUrl,
+      url: this.url,
       params: this.prepareParams(params),
     }; 
 
@@ -56,7 +56,7 @@ export default class PostService extends ApiService {
     //   require: 'balanceByDay,balanceByMonth',
     // }
 
-    return this.api(apiConfig);
+    return this.request(requestConfig);
   }
 }
 ```
@@ -72,7 +72,7 @@ export default class PostService extends ApiService {
   
   constructor() {
     super();
-    this.baseUrl = 'post';
+    this.url = 'post';
   }
 
   store(payload = {}) {
@@ -84,9 +84,9 @@ export default class PostService extends ApiService {
       //   postDate: '2020-12-08 09:00:00',
       // }
 
-      const apiConfig = {
+      const requestConfig = {
         method: 'post',
-        url: this.baseUrl,
+        url: this.url,
         params: this.prepareParams(params),
         data: this.preparePayload(rest),
       };  
@@ -99,7 +99,7 @@ export default class PostService extends ApiService {
       //   },
       // }
 
-      return this.api(apiConfig);
+      return this.request(requestConfig);
     }
 }
 ```
