@@ -117,6 +117,15 @@ export default class ResourceStore {
 
         return null;
       },
+      findBy: (state) => (value, key = 'id') => {
+        const data = Object.values(state.items).find(item => item[key] === value);
+
+        if (data) {
+          return new this.model(data);
+        }
+
+        return null;
+      },
       ...config.getters,
     };
   }

@@ -164,7 +164,7 @@ export default class Model {
     }
   }
 
-  belongsTo(model) {
+  belongsTo(model, foreignKey = null, ownerKey = null) {
 
     if (!store) {
       return null;
@@ -172,9 +172,12 @@ export default class Model {
 
     const className = _.camelCase(model.name);
     const relationshipsKey = className;
-    const foreignKey = `${className}Id`;
+
+    foreignKey = foreignKey || `${className}Id`;
+    ownerKey = ownerKey || 'id';
+
     let belongsToId = null;
-    let relatedData;
+    let relatedData = null;
 
     // Foreign Key Method
 
@@ -188,21 +191,53 @@ export default class Model {
       belongsToId = this.relationships[relationshipsKey];
     }
 
-    const vuexGetter = `${model.vuexModuleKey}/show`;
-    const getter = store.getters[vuexGetter];
-
-    if (getter) {
-      relatedData = getter(belongsToId);
+    if (belongsToId) {
+      relatedData = this.getRelatedDataViaIdentifierFromVuex(model, belongsToId, ownerKey);
     }
 
-    if (relatedData) {
-      return new model(relatedData);
-    }
-
-    return null;
+    return relatedData;
   }
 
-  hasMany(model) {
+  hasOne(model, foreignKey = null, localKey = null, relationshipsKey = null) {
+
+    if (!store) {
+      return null;
+    }
+
+    const className = _.camelCase(model.name);
+    relationshipsKey = relationshipsKey || className;
+    foreignKey = foreignKey || `${_.camelCase(this.constructor.name)}Id`;
+    localKey = localKey || 'id';
+    let hasOneId = null;
+    let relatedData;
+
+    console.log(this.relationships);
+
+    // Relationships Method
+
+    if (this.relationships && this.relationships[relationshipsKey]) {
+      hasOneId = this.relationships[relationshipsKey];
+    }
+
+    if (hasOneId) {
+      relatedData = this.getRelatedDataViaIdentifierFromVuex(model, hasOneId, localKey);
+    }
+
+    // Foreign Key Method
+
+    if (!relatedData) {
+
+      relatedData = this.getRelatedDataViaForeignKeyFromVuex(model, foreignKey, localKey);
+
+      if (relatedData.length) {
+        relatedData = _.first(relatedData); // Could be a breaking point, if there's more than one result in Vuex?
+      }
+    }
+
+    return relatedData;
+  }
+
+  hasMany(model, foreignKey = null, localKey = null) {
 
     if (!store) {
       return [];
@@ -210,7 +245,9 @@ export default class Model {
 
     const className = _.camelCase(model.name);
     const relationshipsKey = pluralize(className);
-    const foreignKey = `${_.camelCase(this.constructor.name)}Id`;
+
+    foreignKey = foreignKey || `${_.camelCase(this.constructor.name)}Id`;
+    localKey = localKey || 'id';
 
     let ids = [];
     let relatedData;
@@ -223,7 +260,7 @@ export default class Model {
       const vuexGetter = `${model.vuexModuleKey}/collection`;
       const getter = store.getters[vuexGetter];
 
-      if (getter) {
+      if (getter && typeof getter === 'function') {
         relatedData = getter(ids);
       }
     }
@@ -231,28 +268,7 @@ export default class Model {
     // Foreign Key Method
 
     if (!relatedData) {
-
-      const allForKey = store.getters[`${model.vuexModuleKey}/all`];
-
-      if (allForKey) {
-        relatedData = allForKey.filter((item) => {
-
-          if (!item[foreignKey]) {
-            return false;
-          }
-
-          // Integer ID's
-          if (parseInt(item[foreignKey]) === parseInt(this.id)) {
-            return true;
-          }
-          // String ID's - less common, but possible
-          else if (item[foreignKey] === this.id) {
-            return true;
-          }
-
-          return false;
-        });
-      }
+      relatedData = this.getRelatedDataViaForeignKeyFromVuex(model, foreignKey, localKey);
     }
 
     if (relatedData) {
@@ -260,5 +276,47 @@ export default class Model {
     }
 
     return relatedData || [];
+  }
+
+  getRelatedDataViaForeignKeyFromVuex(model, foreignKey, localKey) {
+
+    const allItemsForKey = store.getters[`${model.vuexModuleKey}/all`];
+    let relatedData = [];
+
+    if (allItemsForKey) {
+
+      relatedData = allItemsForKey.filter((item) => {
+
+        if (!item[foreignKey] || !item[localKey]) {
+          return false;
+        }
+
+        // Integer ID's
+        if (parseInt(item[foreignKey]) === parseInt(this[localKey])) {
+          return true;
+        }
+        // String ID's - less common, but possible
+        else if (item[foreignKey] === this[localKey]) {
+          return true;
+        }
+
+        return false;
+      });
+    }
+
+    return relatedData;
+  }
+
+  getRelatedDataViaIdentifierFromVuex(model, identifier, ownerKey) {
+
+    let relatedData = null;
+    const vuexGetter = ownerKey === 'id' ? `${model.vuexModuleKey}/show` : `${model.vuexModuleKey}/findBy`;
+    const getter = store.getters[vuexGetter];
+
+    if (getter && typeof getter === 'function') {
+      relatedData = getter(identifier, ownerKey);
+    }
+
+    return relatedData;
   }
 }
