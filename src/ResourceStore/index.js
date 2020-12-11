@@ -174,6 +174,7 @@ export default class ResourceStore {
 
   toObject() {
     return {
+      key: this.key,
       namespaced: this.namespaced,
       state: this.state,
       actions: this.actions,

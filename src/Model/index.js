@@ -211,8 +211,6 @@ export default class Model {
     let hasOneId = null;
     let relatedData;
 
-    console.log(this.relationships);
-
     // Relationships Method
 
     if (this.relationships && this.relationships[relationshipsKey]) {
@@ -287,7 +285,7 @@ export default class Model {
 
       relatedData = allItemsForKey.filter((item) => {
 
-        if (!item[foreignKey] || !item[localKey]) {
+        if (!item[foreignKey] || !this[localKey]) {
           return false;
         }
 
