@@ -18,6 +18,6 @@ export default class Field {
     this.required = config.required || false;
     this.rows = config.rows || 2;
     this.step = config.step || null;
-    this.type =  config.type || String;
+    this.type =  config.type || null;
   }
 }

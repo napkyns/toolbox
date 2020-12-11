@@ -229,6 +229,8 @@ export default class Model {
 
       if (relatedData.length) {
         relatedData = _.first(relatedData); // Could be a breaking point, if there's more than one result in Vuex?
+      } else {
+        relatedData = null;
       }
     }
 
