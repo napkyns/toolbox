@@ -22,4 +22,5 @@ export {
   ResourceService,
   ResourceStore,
   StoreBuilder,
+  windowInitializer,
 };
