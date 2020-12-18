@@ -1,6 +1,6 @@
-if (!window.app) {
-  window.app = {};
-}
+import windowInitializer from './windowInitializer';
+
+windowInitializer();
 
 import ApiService from './ApiService';
 import Field from './Field';

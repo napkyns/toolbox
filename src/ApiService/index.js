@@ -5,7 +5,7 @@ export default class ApiService {
 
   constructor(config = {}) {
 
-    this.baseUrl = config.apiBaseUrl || process.env.VUE_APP_API_BASE_URL || '';
+    this.baseUrl = config.apiBaseUrl || window.app.env.apiBaseUrl || process.env.VUE_APP_API_BASE_URL || '';
     this.maxDepth = config.maxDepth || process.env.VUE_APP_API_MAX_DEPTH || 3;
     this.tokenKey = config.tokenKey || process.env.VUE_APP_TOKEN_KEY || 'token';
     this.loginUrl = config.loginUrl || process.env.VUE_APP_LOGIN_URL || '/auth/login';
@@ -19,11 +19,11 @@ export default class ApiService {
 
       if (error.response && error.response.status === 401) {
 
-        if (localStorage.getItem(this.tokenKey)) {
-          localStorage.removeItem(this.tokenKey);
+        if (window.app.storage.getItem(this.tokenKey)) {
+          window.app.storage.removeItem(this.tokenKey);
         }
 
-        if (this.loginUrl) {
+        if (this.loginUrl && window && window.location) {
           window.location.replace(this.loginUrl);
         } else {
           return Promise.reject(error);
@@ -38,7 +38,7 @@ export default class ApiService {
   request(config = {}) {
 
     const {headers, ...rest} = config;
-    const token = localStorage.getItem(this.tokenKey);
+    const token = window.app.storage.getItem(this.tokenKey);
     const requestHeaders = {
       Authorization: token ? `Bearer ${token}` : null,
       ...headers,
