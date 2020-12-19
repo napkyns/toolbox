@@ -14,6 +14,23 @@ export default () => {
       window.app.env = {};
     }
 
+    if (!window.app.auth) {
+      window.app.auth = {
+        getToken() {
+          console.error('window.app.auth.getToken has not been defined for this project.');
+        },
+        setToken() {
+          console.error('window.app.auth.setToken has not been defined for this project.');
+        },
+        removeToken() {
+          console.error('window.app.auth.removeToken has not been defined for this project.');
+        },
+        unauthenticated() {
+          console.error('window.app.auth.unauthenticated has not been defined for this project.');
+        },
+      };
+    }
+
     if (!window.app.storage) {
       window.app.storage = {
         setItem(key, value) {

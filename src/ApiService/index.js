@@ -5,29 +5,22 @@ export default class ApiService {
 
   constructor(config = {}) {
 
-    this.tokenKey = config.tokenKey;
-    this.loginUrl = config.loginUrl;
+    this.token = config.token;
+    this.unauthenticated = config.unauthenticated;
+    this.maxDepth = config.maxDepth;
 
     this.axios = axios.create({
       ...config,
     });
 
-    this.axios.interceptors.response.use(null, error => {
+    this.axios.interceptors.response.use(null, async (error) => {
 
       if (error.response && error.response.status === 401) {
 
-        const tokenKey = this.tokenKey || window.app.env.tokenKey || 'token';
-        const loginUrl = this.loginUrl || window.app.env.loginUrl || null;
+        const unauthenticated = this.unauthenticated || window.app.auth.unauthenticated || null;
 
-        console.log(tokenKey);
-        console.log(loginUrl);
-
-        if (window.app.storage.getItem(this.tokenKey)) {
-          window.app.storage.removeItem(this.tokenKey);
-        }
-
-        if (loginUrl && window && window.location) {
-          window.location.replace(this.loginUrl);
+        if (unauthenticated) {
+          return unauthenticated();
         } else {
           return Promise.reject(error);
         }
@@ -38,11 +31,18 @@ export default class ApiService {
     });
   }
 
-  request(config = {}) {
+  async request(config = {}) {
 
     const {headers, ...rest} = config;
     const baseUrl = config.apiBaseUrl || window.app.env.apiBaseUrl || '';
-    const token = window.app.storage.getItem(this.tokenKey);
+
+    let token = null;
+
+    if (this.token) {
+      token = this.token();
+    } else if (window.app.auth.getToken) {
+      token = await window.app.auth.getToken();
+    }
 
     const requestHeaders = {
       Authorization: token ? `Bearer ${token}` : null,
@@ -72,7 +72,7 @@ export default class ApiService {
 
   preparePayload(data, currentDepth = 0) {
 
-    const maxDepth = config.maxDepth || process.env.VUE_APP_API_MAX_DEPTH || 3;
+    const maxDepth = this.maxDepth || window.app.env.apiMaxDepth || 3;
 
     if (currentDepth >= maxDepth) {
       return data;
