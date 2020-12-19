@@ -2,7 +2,7 @@
   "name": "@napkyns/toolbox",
   "version": "1.0.31",
   "description": "A collection of helpful JS classes.",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "release": "release-it",
     "test": "echo \"Error: no test specified\" && exit 1"

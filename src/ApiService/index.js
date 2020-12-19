@@ -5,25 +5,28 @@ export default class ApiService {
 
   constructor(config = {}) {
 
-    this.baseUrl = config.apiBaseUrl || window.app.env.apiBaseUrl || process.env.VUE_APP_API_BASE_URL || '';
-    this.maxDepth = config.maxDepth || process.env.VUE_APP_API_MAX_DEPTH || 3;
-    this.tokenKey = config.tokenKey || process.env.VUE_APP_TOKEN_KEY || 'token';
-    this.loginUrl = config.loginUrl || process.env.VUE_APP_LOGIN_URL || '/auth/login';
+    this.tokenKey = config.tokenKey;
+    this.loginUrl = config.loginUrl;
 
     this.axios = axios.create({
-      baseURL: this.baseUrl || '',
-      responseType: 'json',
+      ...config,
     });
 
     this.axios.interceptors.response.use(null, error => {
 
       if (error.response && error.response.status === 401) {
 
+        const tokenKey = this.tokenKey || window.app.env.tokenKey || 'token';
+        const loginUrl = this.loginUrl || window.app.env.loginUrl || null;
+
+        console.log(tokenKey);
+        console.log(loginUrl);
+
         if (window.app.storage.getItem(this.tokenKey)) {
           window.app.storage.removeItem(this.tokenKey);
         }
 
-        if (this.loginUrl && window && window.location) {
+        if (loginUrl && window && window.location) {
           window.location.replace(this.loginUrl);
         } else {
           return Promise.reject(error);
@@ -38,7 +41,9 @@ export default class ApiService {
   request(config = {}) {
 
     const {headers, ...rest} = config;
+    const baseUrl = config.apiBaseUrl || window.app.env.apiBaseUrl || '';
     const token = window.app.storage.getItem(this.tokenKey);
+
     const requestHeaders = {
       Authorization: token ? `Bearer ${token}` : null,
       ...headers,
@@ -46,6 +51,8 @@ export default class ApiService {
 
     return this.axios({
       headers: requestHeaders,
+      baseURL: baseUrl || '',
+      responseType: 'json',
       ...rest,
     });
   }
@@ -65,7 +72,9 @@ export default class ApiService {
 
   preparePayload(data, currentDepth = 0) {
 
-    if (currentDepth >= this.maxDepth) {
+    const maxDepth = config.maxDepth || process.env.VUE_APP_API_MAX_DEPTH || 3;
+
+    if (currentDepth >= maxDepth) {
       return data;
     }
 

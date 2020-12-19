@@ -10,6 +10,10 @@ export default () => {
       window.app = {};
     }
 
+    if (!window.app.env) {
+      window.app.env = {};
+    }
+
     if (!window.app.storage) {
       window.app.storage = {
         setItem(key, value) {
