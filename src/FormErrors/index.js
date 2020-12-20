@@ -9,11 +9,26 @@ export default class FormErrors {
   record(errors) {
     this.bag = {};
 
-    errors.forEach(error => {
-      if (error.key) {
-        this.bag[_.camelCase(error.key)] = error.detail;
+    if (Array.isArray(errors)) {
+      errors.forEach(error => {
+        if (error.key) {
+          this.bag[_.camelCase(error.key)] = error.detail;
+        }
+      });
+    } else {
+      for (const [key, value] of Object.entries(errors)) {
+
+        let message = '';
+
+        if (Array.isArray(value)) {
+          message = value.join(' ');
+        } else {
+          message = value;
+        }
+
+        this.bag[_.camelCase(key)] = message;
       }
-    })
+    }
   }
 
   get(field) {
