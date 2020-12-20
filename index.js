@@ -10,6 +10,7 @@ import Model from './src/Model';
 import Paginator from './src/Paginator';
 import ResourceService from './src/ResourceService';
 import ResourceStore from './src/ResourceStore';
+import RouterBuilder from './src/RouterBuilder';
 import StoreBuilder from './src/StoreBuilder';
 
 export {
@@ -21,6 +22,7 @@ export {
   Paginator,
   ResourceService,
   ResourceStore,
+  RouterBuilder,
   StoreBuilder,
   windowInitializer,
 };
