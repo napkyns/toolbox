@@ -12,4 +12,10 @@ export default class Form {
     this.fields = {...this.originalFields};
     this.errors.clear();
   }
+
+  recordErrors(error) {
+    if (error.response && error.response.data) {
+      this.errors.record(error.response.data.errors);
+    }
+  }
 }
