@@ -5,16 +5,16 @@ import {SnackbarProgrammatic as Snackbar} from 'buefy';
 
 export default class Framework {
   
-  constructor() {
+  constructor(config = {}) {
     this.booted = false;
-    this.vueModules = [];
+    this.vueServiceProviders = [];
     this.router = null;
     this.routerBuilder = null;
     this.store = null;
     this.vue = null;
     this.vueConfig = {};
     this.vueRootComponent = null;
-    this.userVuexAction = 'user/show';
+    this.userVuexAction = config.userVuexAction || 'user/show';
 
     this.init();
   }
@@ -159,14 +159,14 @@ export default class Framework {
     window.app[key] = value;
   }
 
-  addVueModule(module) {
-    this.vueModules.push(module);
+  addVueServiceProvider(serviceProvider) {
+    this.vueServiceProviders.push(serviceProvider);
   }
 
-  loadModules() {
+  loadServiceProviders() {
 
-    if (this.vueModules.length) {
-      this.vueModules.forEach((ServiceProvider) => {
+    if (this.vueServiceProviders.length) {
+      this.vueServiceProviders.forEach((ServiceProvider) => {
 
         const serviceProvider = new ServiceProvider({
           framework: this,
@@ -176,7 +176,7 @@ export default class Framework {
       });
     }
 
-    // React Native Modules?
+    // React Native ServiceProviders?
 
   }
 
@@ -222,7 +222,7 @@ export default class Framework {
    */
   boot() {
 
-    this.loadModules();
+    this.loadServiceProviders();
 
     const token = window.app.auth.getToken();
 

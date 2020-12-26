@@ -134,6 +134,31 @@ export default class ResourceStore {
 
     const normalized = normalize(data);
 
+    /**
+     * User specific payload handling
+     *
+     * We store the user data at the root of the User Vuex Module Store State,
+     * versus storing the user as one item of a collection of objects,
+     * as we typically do with other Store Modules.
+     */
+
+    if (normalized.user) {
+
+      const user = normalized.user[data.data.id];
+
+      if (user && user.attributes) {
+        for (const [key, value] of Object.entries(user.attributes)) {
+          user[key] = value;
+        }
+        delete user.attributes;
+      }
+
+      commit('auth/authenticated', !!window.app.auth.getToken(), {root: true})
+      return commit(`user/user`, user, {root:true});
+    }
+
+    // Other Objects
+
     for (let [key, models] of Object.entries(normalized)) {
 
       for (let [id, model] of Object.entries(models)) {
