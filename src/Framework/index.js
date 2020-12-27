@@ -104,7 +104,7 @@ export default class Framework {
       }
 
     };
-    window.app.config = (config = {}) => {
+    window.app.confirm = (config = {}) => {
       Dialog.confirm({
         title: config.title || '',
         message: config.message || '',
@@ -127,23 +127,7 @@ export default class Framework {
 
   storage(storage = {}) {
     if (!window.app.storage) {
-      window.app.storage = {
-        setItem(key, value) {
-          return typeof value === 'string' ? window.localStorage.setItem(key, value) : window.localStorage.setItem(key, JSON.stringify(value));
-        },
-        getItem(key) {
-          const value = window.localStorage.getItem(key);
-
-          try {
-            return JSON.parse(value);
-          } catch(e) {
-            return value;
-          }
-        },
-        removeItem(key) {
-          return window.localStorage.removeItem(key);
-        },
-      };
+      window.app.storage = {};
     }
 
     window.app.storage = {
@@ -171,8 +155,8 @@ export default class Framework {
     };
   }
 
-  addHelper(key, value) {
-    window.app[key] = value;
+  addHelper(key, helper) {
+    window.app[key] = helper;
   }
 
   addVueServiceProvider(serviceProvider) {
@@ -206,11 +190,7 @@ export default class Framework {
   }
 
   resetRouter() {
-    this.router = new VueRouter({
-      mode: 'history',
-      base: process.env.BASE_URL,
-      routes: this.routerBuilder.getRoutes(),
-    });
+    this.router = this.routerBuilder.resetRouter();
   }
 
   addVue(Vue, RooComponent, config = {}) {

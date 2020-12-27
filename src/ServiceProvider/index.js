@@ -23,4 +23,12 @@ export default class ServiceProvider {
     }
   }
 
+  addHelper(key, helper) {
+    if (this.framework) {
+      this.framework.addHelper(key, helper);
+    } else {
+      console.error('No framework');
+    }
+  }
+
 }
