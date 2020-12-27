@@ -171,7 +171,7 @@ export default class Model {
     }
 
     const className = _.camelCase(model.name);
-    const relationshipsKey = className;
+    const relationshipKey = className;
 
     foreignKey = foreignKey || `${className}Id`;
     ownerKey = ownerKey || 'id';
@@ -187,8 +187,8 @@ export default class Model {
 
     // Relationships Method
 
-    else if (this.relationships && this.relationships[relationshipsKey]) {
-      belongsToId = this.relationships[relationshipsKey];
+    else if (this.relationships && this.relationships[relationshipKey]) {
+      belongsToId = this.relationships[relationshipKey];
     }
 
     if (belongsToId) {
@@ -198,14 +198,14 @@ export default class Model {
     return relatedData;
   }
 
-  hasOne(model, foreignKey = null, localKey = null, relationshipsKey = null) {
+  hasOne(model, foreignKey = null, localKey = null, relationshipKey = null) {
 
     if (!store) {
       return null;
     }
 
     const className = _.camelCase(model.name);
-    relationshipsKey = relationshipsKey || className;
+    relationshipKey = relationshipKey || className;
     foreignKey = foreignKey || `${_.camelCase(this.constructor.name)}Id`;
     localKey = localKey || 'id';
     let hasOneId = null;
@@ -213,8 +213,8 @@ export default class Model {
 
     // Relationships Method
 
-    if (this.relationships && this.relationships[relationshipsKey]) {
-      hasOneId = this.relationships[relationshipsKey];
+    if (this.relationships && this.relationships[relationshipKey]) {
+      hasOneId = this.relationships[relationshipKey];
     }
 
     if (hasOneId) {
@@ -244,7 +244,7 @@ export default class Model {
     }
 
     const className = _.camelCase(model.name);
-    const relationshipsKey = pluralize(className);
+    const relationshipKey = pluralize(className);
 
     foreignKey = foreignKey || `${_.camelCase(this.constructor.name)}Id`;
     localKey = localKey || 'id';
@@ -254,9 +254,9 @@ export default class Model {
 
     // Relationships Method
 
-    if (this.relationships && this.relationships[relationshipsKey]) {
+    if (this.relationships && this.relationships[relationshipKey]) {
 
-      ids = this.relationships[relationshipsKey];
+      ids = this.relationships[relationshipKey];
       const vuexGetter = `${model.vuexModuleKey}/collection`;
       const getter = store.getters[vuexGetter];
 
@@ -276,6 +276,36 @@ export default class Model {
     }
 
     return relatedData || [];
+  }
+
+  hasManyThrough(related, through, relatedRelationshipKey = null, throughRelationshipKey = null) {
+
+    const relatedClassName = _.camelCase(related.name);
+    relatedRelationshipKey = relatedRelationshipKey || pluralize(relatedClassName);
+
+    const throughClassName = _.camelCase(through.name);
+    throughRelationshipKey = throughRelationshipKey || pluralize(throughClassName);
+
+    if (this[throughRelationshipKey]) {
+      return this[throughRelationshipKey][relatedRelationshipKey];
+    }
+
+    return [];
+  }
+
+  hasManyThroughMany(related, through, relatedRelationshipKey = null, throughRelationshipKey = null) {
+
+    const relatedClassName = _.camelCase(related.name);
+    relatedRelationshipKey = relatedRelationshipKey || pluralize(relatedClassName);
+
+    const throughClassName = _.camelCase(through.name);
+    throughRelationshipKey = throughRelationshipKey || pluralize(throughClassName);
+
+    if (this[throughRelationshipKey] && this[throughRelationshipKey].length) {
+      return this[throughRelationshipKey].map(throughObject => throughObject[relatedRelationshipKey]).flat();
+    }
+
+    return [];
   }
 
   getRelatedDataViaForeignKeyFromVuex(model, foreignKey, localKey) {

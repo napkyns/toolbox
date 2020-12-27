@@ -127,7 +127,23 @@ export default class Framework {
 
   storage(storage = {}) {
     if (!window.app.storage) {
-      window.app.storage = {};
+      window.app.storage = {
+        setItem(key, value) {
+          return typeof value === 'string' ? window.localStorage.setItem(key, value) : window.localStorage.setItem(key, JSON.stringify(value));
+        },
+        getItem(key) {
+          const value = window.localStorage.getItem(key);
+
+          try {
+            return JSON.parse(value);
+          } catch(e) {
+            return value;
+          }
+        },
+        removeItem(key) {
+          return window.localStorage.removeItem(key);
+        },
+      };
     }
 
     window.app.storage = {

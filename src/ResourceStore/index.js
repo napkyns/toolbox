@@ -154,7 +154,7 @@ export default class ResourceStore {
       }
 
       commit('auth/authenticated', !!window.app.auth.getToken(), {root: true})
-      return commit(`user/user`, user, {root:true});
+      commit(`user/user`, user, {root:true});
     }
 
     // Other Objects
