@@ -4,7 +4,7 @@ import {DialogProgrammatic as Dialog} from 'buefy';
 import {SnackbarProgrammatic as Snackbar} from 'buefy';
 
 export default class Framework {
-  
+
   constructor(config = {}) {
     this.booted = false;
     this.vueServiceProviders = [];
@@ -127,7 +127,7 @@ export default class Framework {
       });
     };
   }
-  
+
   env(env = {}) {
     if (!window.app.env) {
       window.app.env = {};
@@ -184,12 +184,16 @@ export default class Framework {
     if (this.vueServiceProviders.length) {
       this.vueServiceProviders.forEach(({ServiceProvider, options}) => {
 
-        const serviceProvider = new ServiceProvider({
-          framework: this,
-          options,
-        });
+        if (ServiceProvider.prototype.constructor) {
 
-        serviceProvider.boot();
+          const serviceProvider = new ServiceProvider({
+            framework: this,
+            options,
+          });
+
+          serviceProvider.boot();
+        }
+
       });
     }
 
