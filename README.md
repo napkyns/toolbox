@@ -9,6 +9,7 @@ A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 - [Field](./src/Field)
 - [Form](./src/Form)
 - [FormErrors](./src/FormErrors)
+- [Framework](./src/Framework)
 - [Menu](./src/Menu)
 - [MenuItem](./src/MenuItem)
 - [Model](./src/Model)
@@ -16,6 +17,7 @@ A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 - [ResourceService](./src/ResourceService)
 - [ResourceStore](./src/ResourceStore)
 - [RouterBuilder](./src/RouterBuilder)
+- [ServiceProvider](./src/ServiceProvider)
 - [StoreBuilder](./src/StoreBuilder)
 
 ## Installation
@@ -28,12 +30,4 @@ npm i @napkyns/toolbox
 **Yarn**  
 ```
 yarn add @napkyns/toolbox
-```
-
-## Window Variable
-
-Adding your Vue instance to the `window.app` object will add `hasMany` and `belongsTo` relationship functionality to the [Model](./src/Model/README.md). 
-
-```javascript
-window.app.vue = new Vue(vueConfig);
 ```

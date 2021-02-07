@@ -24,7 +24,7 @@ export default class Framework {
     window.app = window.app; // Doesn't work without this... wtf?
     window.app.d = console.log;
     window.app.vue = null;
-    window.app.findRouteByName = (name, routesArg = []) => {
+    window.app.findRouteByName = (name, routesArg = [], payload = {}) => {
 
       if (!this.router) {
         console.error('router not set');
@@ -42,7 +42,7 @@ export default class Framework {
         }
 
         if (!route && _route.children) {
-          route = window.app.findRouteByName(name, _route.children);
+          route = window.app.findRouteByName(name, _route.children, payload);
         }
 
         return route;
@@ -51,7 +51,20 @@ export default class Framework {
 
       if (!route) {
         console.error(`Could not find route with name: ${name}`);
-        return '';
+      }
+
+      if (payload.params) {
+        route.params = {
+          ...route.params,
+          ...payload.params,
+        };
+      }
+
+      if (payload.query) {
+        route.query = {
+          ...route.query,
+          ...payload.query,
+        };
       }
 
       return route;
@@ -159,17 +172,21 @@ export default class Framework {
     window.app[key] = helper;
   }
 
-  addVueServiceProvider(serviceProvider) {
-    this.vueServiceProviders.push(serviceProvider);
+  addVueServiceProvider(ServiceProvider, options = {}) {
+    this.vueServiceProviders.push({
+      ServiceProvider,
+      options,
+    });
   }
 
   loadServiceProviders() {
 
     if (this.vueServiceProviders.length) {
-      this.vueServiceProviders.forEach((ServiceProvider) => {
+      this.vueServiceProviders.forEach(({ServiceProvider, options}) => {
 
         const serviceProvider = new ServiceProvider({
           framework: this,
+          options,
         });
 
         serviceProvider.boot();

@@ -2,6 +2,7 @@ export default class ServiceProvider {
 
   constructor(config = {}) {
     this.framework = config.framework || null;
+    this.options = config.options || {};
   }
 
   boot() {}

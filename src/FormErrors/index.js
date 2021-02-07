@@ -32,8 +32,8 @@ export default class FormErrors {
   }
 
   get(field) {
-    if (this.bag[field]) {
-      return this.bag[field];
+    if (this.bag[_.camelCase(field)]) {
+      return this.bag[_.camelCase(field)];
     }
 
     return null;
