@@ -1,6 +1,6 @@
 {
   "name": "@napkyns/toolbox",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "description": "A collection of helpful JS classes.",
   "main": "index.js",
   "scripts": {

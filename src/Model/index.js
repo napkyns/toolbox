@@ -2,6 +2,7 @@ import _ from 'lodash';
 import pluralize from 'pluralize';
 import moment from 'moment';
 
+import Address from '../Address';
 import Field from '../Field';
 
 let store;
@@ -125,6 +126,11 @@ export default class Model {
       // Number
       else if (field && field.type === Number) {
         return Number(value);
+      }
+
+      // Address
+      else if (field && field.type === Address) {
+        return new Address(value);
       }
 
       // String
