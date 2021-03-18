@@ -4,6 +4,7 @@ A collection of helpful JS classes - with some specific benefits with Vue/Vuex.
 
 ## Classes
 
+- [Address](./src/Address)
 - [ApiService](./src/ApiService)
 - [Column](./src/Column)
 - [Field](./src/Field)

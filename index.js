@@ -2,6 +2,7 @@ import windowInitializer from './src/windowInitializer';
 
 windowInitializer();
 
+import Address from './src/Address';
 import ApiService from './src/ApiService';
 import Field from './src/Field';
 import Form from './src/Form';
@@ -16,6 +17,7 @@ import ServiceProvider from './src/ServiceProvider';
 import StoreBuilder from './src/StoreBuilder';
 
 export {
+  Address,
   ApiService,
   Field,
   Form,
