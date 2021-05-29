@@ -1,5 +1,3 @@
-import VueRouter from 'vue-router';
-
 import {DialogProgrammatic as Dialog} from 'buefy';
 import {SnackbarProgrammatic as Snackbar} from 'buefy';
 
@@ -14,7 +12,7 @@ export default class Framework {
     this.vue = null;
     this.vueConfig = {};
     this.vueRootComponent = null;
-    this.userVuexAction = config.userVuexAction || 'user/show';
+    this.userVuexAction = config.userVuexAction || 'auth/user';
 
     this.init();
   }
