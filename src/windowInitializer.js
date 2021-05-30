@@ -59,10 +59,10 @@ export default () => {
     if (!window.app.theme) {
       window.app.theme = {
         get() {
-          console.error('window.app.theme.get has not been defined for this project.');
+          // console.error('window.app.theme.get has not been defined for this project.');
         },
-        set(token) {
-          console.error('window.app.theme.set has not been defined for this project.');
+        set(theme) {
+          // console.error('window.app.theme.set has not been defined for this project.');
         },
       };
     }
