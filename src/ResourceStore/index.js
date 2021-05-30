@@ -134,26 +134,7 @@ export default class ResourceStore {
 
     const normalized = normalize(data);
 
-    /**
-     * Auth
-     */
-
-    if (normalized.user) {
-
-      const user = normalized.user[data.data.id];
-
-      if (user && user.attributes) {
-        for (const [key, value] of Object.entries(user.attributes)) {
-          user[key] = value;
-        }
-        delete user.attributes;
-      }
-
-      commit('auth/authenticated', !!window.app.auth.getToken(), {root: true})
-      commit(`auth/user`, user, {root:true});
-    }
-
-    // Other Objects
+    commit('auth/authenticated', !!window.app.auth.getToken(), {root: true})
 
     for (let [key, models] of Object.entries(normalized)) {
 

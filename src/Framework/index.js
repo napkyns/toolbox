@@ -12,7 +12,7 @@ export default class Framework {
     this.vue = null;
     this.vueConfig = {};
     this.vueRootComponent = null;
-    this.userVuexAction = config.userVuexAction || 'auth/user';
+    this.userVuexAction = config.userVuexAction || 'auth/userShow';
 
     this.init();
   }
