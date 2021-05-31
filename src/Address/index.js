@@ -1,5 +1,6 @@
 export default class Address {
   constructor (config = {}) {
+    this.name = config.name || null;
     this.street = config.street || null;
     this.street2 = config.street2 || null;
     this.city = config.city || null;
