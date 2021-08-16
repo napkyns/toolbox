@@ -104,18 +104,24 @@ export default class ResourceStore {
       },
       collection: (state) => (ids) => {
         if (ids && Array.isArray(ids)) {
-          return ids.map(id => state.items[id]).map(data => new this.model(data)).filter(item => item !== null);
+          return ids.map(id => new this.model(state.items[id])).filter(item => item.id && item !== null);
         }
         return [];
       },
       show: (state) => (id) => {
-        const data = state.items[id];
+
+        let data = state.items[id];
 
         if (data) {
           return new this.model(data);
+        } else {
+          return window.app.vue.$store.dispatch(`${this.key}/show`, {
+            id,
+          }).then(() => {
+            return new this.model(state.items[id]);
+          });
         }
 
-        return null;
       },
       findBy: (state) => (value, key = 'id') => {
         const data = Object.values(state.items).find(item => item[key] === value);
@@ -167,8 +173,12 @@ export default class ResourceStore {
       }
     }
 
-    if (normalized[primaryKey]) {
-      return Object.keys(normalized[primaryKey]);
+    if (data.data) {
+      if (Array.isArray(data.data)) {
+        return data.data.map(item => item.id);
+      } else {
+        return [data.data.id];
+      }
     }
 
     return [];
