@@ -229,9 +229,9 @@ export default class Framework {
       store: this.store,
       render: h => h(this.vueRootComponent),
       ...this.vueConfig,
-    }).$mount('#app');
+    });
 
-    window.dispatchEvent(new CustomEvent("vueBooted", {}));
+    window.app.vue.$mount('#app');
   }
 
   /**
