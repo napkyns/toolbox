@@ -230,6 +230,8 @@ export default class Framework {
       render: h => h(this.vueRootComponent),
       ...this.vueConfig,
     }).$mount('#app');
+
+    window.dispatchEvent(new CustomEvent("vueBooted", {}));
   }
 
   /**
