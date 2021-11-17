@@ -104,8 +104,8 @@ export default class Model {
     if (!this._config.excluded.includes(camelCaseKey)) {
 
       // ID
-      if (camelCaseKey === 'id' && parseInt(value)) {
-        return parseInt(value);
+      if (camelCaseKey === 'id' && Number(value)) {
+        return Number(value);
       }
 
       // Null

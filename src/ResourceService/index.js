@@ -82,4 +82,28 @@ export default class ResourceService extends ApiService {
       data: this.preparePayload(rest),
     });
   }
+
+  destroyAll(payload = {}) {
+    
+    const { params, ...rest } = payload;
+
+    return this.request({
+      method: 'delete',
+      url: `${this.baseUrl}/delete-all`,
+      params: this.prepareParams(params),
+      data: this.preparePayload(rest),
+    });
+  }
+
+  destroyByIds(payload = {}) {
+    
+    const { params, ...rest } = payload;
+
+    return this.request({
+      method: 'delete',
+      url: `${this.baseUrl}/delete-by-ids`,
+      params: this.prepareParams(params),
+      data: this.preparePayload(rest),
+    });
+  }
 }

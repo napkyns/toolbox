@@ -75,6 +75,16 @@ export default class ResourceStore {
           commit('remove', model);
         });
       },
+      destroyAll: ({commit}, payload) => {
+        return this.service.destroyAll(payload).then(() => {
+          commit('index', {});
+        });
+      },
+      destroyByIds: ({commit}, payload) => {
+        return this.service.destroyByIds(payload).then(() => {
+          commit('removeByIds', payload.ids || []);
+        });
+      },
       ...config.actions,
     };
 
@@ -91,6 +101,18 @@ export default class ResourceStore {
       remove(state, model) {
         const items = state.items;
         delete items[model.id];
+        state.items = {
+          ...items,
+        };
+      },
+      removeByIds(state, ids = []) {
+
+        const items = state.items;
+
+        ids.forEach((id) => {
+          delete items[id];
+        });
+
         state.items = {
           ...items,
         };
