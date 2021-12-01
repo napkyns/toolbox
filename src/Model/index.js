@@ -5,6 +5,10 @@ import moment from 'moment';
 import Address from '../Address';
 import Field from '../Field';
 
+const parseBoolean = (truthyValue) => {
+  return truthyValue === true || (typeof truthyValue === String && truthyValue.toLowerCase() === 'true') || truthyValue === 1;
+};
+
 let store;
 
 export default class Model {
@@ -96,6 +100,27 @@ export default class Model {
     return null;
   }
 
+  static preparePayload(payload) {
+
+    for (const [key, value] of Object.entries(payload)) {
+
+      if (this.fields[key]) {
+
+        const field = this.fields[key];
+
+        if (field.preparePayload) {
+          payload[key] = field.preparePayload(value);
+        } else if (field.type === Boolean) {
+          payload[key] = parseBoolean(value);
+        }
+
+      }
+
+    }
+
+    return payload;
+  }
+
   parseValueRecursive(key, value) {
 
     const camelCaseKey = _.camelCase(key);
@@ -120,7 +145,7 @@ export default class Model {
 
       // Bool
       else if (field && field.type === Boolean) {
-        return value === 1 || value === 'true' || value === true;
+        return parseBoolean(value);
       }
 
       // Number
