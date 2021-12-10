@@ -268,14 +268,14 @@ export default class Model {
     return relatedData;
   }
 
-  hasMany(model, foreignKey = null, localKey = null) {
+  hasMany(model, foreignKey = null, localKey = null, relationshipKey = null) {
 
     if (!store) {
       return [];
     }
 
     const className = _.camelCase(model.name);
-    const relationshipKey = pluralize(className);
+    relationshipKey = relationshipKey || pluralize(className);
 
     foreignKey = foreignKey || `${_.camelCase(this.constructor.name)}Id`;
     localKey = localKey || 'id';
