@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import pluralize from 'pluralize';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 import Address from '../Address';
 import Field from '../Field';
@@ -35,6 +35,7 @@ export default class Model {
       fields: {
         ...(this.constructor.fields || {}),
       },
+      preserveCasing: [],
     };
 
     if (window.app && window.app.vue) {
@@ -140,7 +141,8 @@ export default class Model {
 
       // Date
       else if ((field && field.type === Date) || (this._config.dates.includes(camelCaseKey) && moment(value).isValid())) {
-        return moment(value);
+        const timezone = window.app.storage.getItem('timezone') || (moment && moment.tz ? moment.tz.guess() : null) || 'utc';
+        return moment(value).tz(timezone);
       }
 
       // Bool

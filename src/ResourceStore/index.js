@@ -6,7 +6,7 @@ export default class ResourceStore {
 
   constructor(config = {}) {
 
-    this.key = config.model.vuexModuleKey || config.key || null;
+    this.key = config.key || config.model.vuexModuleKey || null;
 
     this.model = config.model || {};
 
